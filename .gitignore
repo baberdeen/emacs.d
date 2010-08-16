@@ -2,3 +2,6 @@ auto-save-list/
 /history
 /places
 saves/
+\#*
+tramp
+*~
