@@ -106,3 +106,34 @@
 (global-set-key "\C-x\C-b" 'electric-buffer-list)
 (require 'misc)
 (global-set-key "\M-f" 'forward-to-word)
+
+;;
+;; some usefull defs
+;;
+
+
+(setq-default show-trailing-whitespace t)      ;; show trailing whitespace on lines
+(setq-default default-indicate-empty-lines t)  ;; show blank lines at end of buffer (doesnt work ?)
+(setq split-width-threshold nil)               ;; never split vertically
+(modify-syntax-entry ?_ "w")
+
+;;
+;; want dired-x
+;;
+
+(add-hook 'dired-load-hook
+               (lambda ()
+                 (load "dired-x")
+                 ;; Set dired-x global variables here.  For example:
+                 ;; (setq dired-guess-shell-gnutar "gtar")
+                 ;; (setq dired-x-hands-off-my-keys nil)
+                 ))
+(add-hook 'dired-mode-hook
+	  (lambda ()
+	    ;; Set dired-x buffer-local variables here.  For example:
+	    (dired-omit-mode 1)
+	    ))
+
+
+(require 'buff-menu+)
+(add-to-list 'same-window-buffer-names "*Buffer List*")

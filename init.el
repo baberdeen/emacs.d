@@ -7,7 +7,12 @@
 
 (my-site-start "~/.emacs.d/personal/site-start/")
 
+(eval-after-load "dired"
+  '(require 'dired-x))
 
+(add-hook 'dired-mode-hook
+          (lambda ()
+            (dired-omit-mode 1)))
 
 
 
