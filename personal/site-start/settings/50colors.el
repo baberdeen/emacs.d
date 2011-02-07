@@ -1,4 +1,4 @@
-(color-theme-standard)
+(color-theme-tty-dark)
 
 (defun my-describe-theme () ; Show the current theme
       (interactive)

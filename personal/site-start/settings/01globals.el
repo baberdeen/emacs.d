@@ -89,7 +89,7 @@
                     (select-window first-win)
                       (if this-win-2nd (other-window 1))))))
 
-(global-set-key [(control x) (t)] 'toggle-window-split)
+(global-set-key [(control x) (T)] 'toggle-window-split)
 
 ;;
 ;; other stuff
@@ -102,8 +102,8 @@
 ;; default to unified diffs
 (setq diff-switches "-u")
 
-(global-set-key "\C-x\C-b" 'buffer-menu)
-(global-set-key "\C-x\C-b" 'electric-buffer-list)
+;;(global-set-key "\C-x\C-b" 'buffer-menu)
+ (global-set-key "\C-x\C-b" 'electric-buffer-list)
 (require 'misc)
 (global-set-key "\M-f" 'forward-to-word)
 
@@ -137,3 +137,142 @@
 
 (require 'buff-menu+)
 (add-to-list 'same-window-buffer-names "*Buffer List*")
+
+;; This takes way to long when using emacs in the RC tree
+;;(require 'git)
+
+;; auttosave sucks over nfs
+
+(setq auto-save-default nil)
+
+;; Kills all them buffers except scratch
+;; optained from http://www.chrislott.org/geek/emacs/dotemacs.html
+(defun nuke-all-buffers ()
+  "kill all buffers, leaving *scratch* only"
+  (interactive)
+  (mapcar (lambda (x) (kill-buffer x))
+	    (buffer-list))
+  (delete-other-windows))
+
+;; Kills live buffers, leaves some emacs work buffers
+;; optained from http://www.chrislott.org/geek/emacs/dotemacs.html
+(defun nuke-some-buffers (&optional list)
+  "For each buffer in LIST, kill it silently if unmodified. Otherwise ask.
+LIST defaults to all existing live buffers."
+  (interactive)
+  (if (null list)
+      (setq list (buffer-list)))
+  (while list
+    (let* ((buffer (car list))
+	      (name (buffer-name buffer)))
+      (and (not (string-equal name ""))
+	      (not (string-equal name "*Messages*"))
+	        ;; (not (string-equal name "*Buffer List*"))
+	         (not (string-equal name "*buffer-selection*"))
+		    (not (string-equal name "*Shell Command Output*"))
+		       (not (string-equal name "*scratch*"))
+		          (/= (aref name 0) ? )
+			     (if (buffer-modified-p buffer)
+				        (if (yes-or-no-p
+					         (format "Buffer %s has been edited. Kill? " name))
+					       (kill-buffer buffer))
+			            (kill-buffer buffer))))
+    (setq list (cdr list))))
+
+
+;; get rid of the toolbar on top of the window
+(tool-bar-mode 0)
+;; Show column number at bottom of screen
+(column-number-mode 1)
+
+
+;;will make the last line end in a carriage return.
+(setq require-final-newline t) 
+
+(require 'redo+)
+  (global-set-key (kbd "C-?") 'redo)
+
+;; Centering code stolen from somewhere and restolen from 
+;; http://www.chrislott.org/geek/emacs/dotemacs.html
+;; centers the screen around a line...
+(global-set-key [(control l)]  'centerer)
+
+(defun centerer ()
+   "Repositions current line: once middle, twice top, thrice bottom"
+   (interactive)
+   (cond ((eq last-command 'centerer2)  ; 3 times pressed = bottom
+	    (recenter -1))
+	  ((eq last-command 'centerer1)  ; 2 times pressed = top
+	     (recenter 0)
+	       (setq this-command 'centerer2))
+	   (t                             ; 1 time pressed = middle
+	      (recenter)
+	        (setq this-command 'centerer1))))
+
+;; show ascii table
+;; optained from http://www.chrislott.org/geek/emacs/dotemacs.html
+(defun ascii-table ()
+  "Print the ascii table. Based on a defun by Alex Schroeder <asc@bsiag.com>"
+  (interactive)
+  (switch-to-buffer "*ASCII*")
+  (erase-buffer)
+  (insert (format "ASCII characters up to number %d.\n" 254))
+  (let ((i 0))
+    (while (< i 254)
+      (setq i (+ i 1))
+      (insert (format "%4d %c\n" i i))))
+  (beginning-of-buffer))
+
+(global-set-key (kbd "<home>") 'beginning-of-buffer)
+(global-set-key (kbd "<end>") 'end-of-buffer)
+
+;--- Function for Control shift tab -----
+(defun c-shift-tab-buffer ()
+  ;switches to two buffers ago
+  (interactive)
+  (switch-to-buffer (other-buffer (other-buffer (current-buffer) t)))
+) 
+
+;(global-set-key [(control kp-tab)] 'c-shift-tab-buffer)
+
+;;; replace
+
+(defun substitute-regexp (substitution)
+  "Use s/old/new/g regexp syntax for `query-replace'."
+  (interactive
+   (list
+    (read-from-minibuffer "Substitute regexp: " '("s///g" . 3) nil nil
+                          'query-replace-history nil t)))
+  (if (string-match "^s/\\(.*\\)/\\(.*\\)/\\([gi]*\\)" substitution)
+      (let* ((sregex (match-string 1 substitution))
+             (ssubst (match-string 2 substitution))
+             (sflags (match-string 3 substitution))
+             (case-fold-search (string-match "i" sflags)))
+        (perform-replace
+         sregex ssubst (string-match "g" sflags)
+         t nil nil nil
+         (if (and transient-mark-mode mark-active) (region-beginning))
+         (if (and transient-mark-mode mark-active) (region-end))))
+    (error "Invalid syntax")))
+
+(setq set-mark-command-repeat-pop 1)
+(defun roundring () 
+   (interactive)
+  "move tghru the mark riung"
+  (set-mark-command 1) 
+)
+;;(global-set-key [(control x) (control x)] 'roundring)
+
+(defun RC () 
+   (interactive)
+  "Compile the radio controller"
+  (compile "make -k PLATFORM=Linux_OE_RC" ) 
+)
+
+;;  want gtags mode
+
+(setq c-mode-hook
+          '(lambda ()
+              (gtags-mode 1)
+      ))
+(setq vc-handled-backends nil)

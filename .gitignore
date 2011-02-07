@@ -4,4 +4,6 @@ auto-save-list/
 saves/
 \#*
 tramp
+byte-cache/
 *~
+
