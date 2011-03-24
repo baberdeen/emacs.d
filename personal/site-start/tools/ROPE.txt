@@ -1,0 +1,22 @@
+Getting ropemacs working
+
+
+1: install the parts
+
+   pymacs.git
+
+     make
+     sudo python setup.py install
+
+     copy pymacs.el to ./my-packages/05pymacs.el if it is not there
+
+     make clean
+
+   rope-0.9.3
+
+     sudo python setup.py install
+
+   ropemacs-0.6
+
+     sudo python setup.py install
+
