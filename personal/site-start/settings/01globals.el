@@ -1,4 +1,5 @@
 (global-set-key [(control x) (control b)] 'bs-show) ;; better buffer selector
+(global-set-key [(control c) (control f)] 'gtags-find-tag-from-here) ;; better buffer selector
 (global-font-lock-mode t)                           ;; always want syntax highlighting
 (setq font-lock-maximum-decoration t)               ;; as nice as possible
 (xterm-mouse-mode)                                  ;; use mouse buttons
@@ -35,11 +36,11 @@
 ;; emacs will write time-stamp information there when saving the file.
 ;; see the top of this file for an example... 
 
-(setq 
-  time-stamp-active t          ; do enable time-stamps
-  time-stamp-line-limit 10     ; check first 10 buffer lines for Time-stamp: <>
-  time-stamp-format "Last changed %02d-%B-%04y %02H:%02M:%02S by %L, %u") ; date format
-(add-hook 'write-file-hooks 'time-stamp) ; update when saving
+;;(setq 
+;;  time-stamp-active t          ; do enable time-stamps
+;;  time-stamp-line-limit 10     ; check first 10 buffer lines for Time-stamp: <>
+;;  time-stamp-format "Last changed %02d-%B-%04y %02H:%02M:%02S by %L, %u") ; date format
+;;(add-hook 'write-file-hooks 'time-stamp) ; update when saving
 
 
 ;;;

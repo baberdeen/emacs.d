@@ -6,4 +6,5 @@ saves/
 tramp
 byte-cache/
 *~
-
+*.elc
+.#*
