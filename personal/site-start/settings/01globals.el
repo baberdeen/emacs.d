@@ -104,7 +104,7 @@
 (setq diff-switches "-u")
 
 ;;(global-set-key "\C-x\C-b" 'buffer-menu)
- (global-set-key "\C-x\C-b" 'electric-buffer-list)
+(global-set-key "\C-x\C-b" 'electric-buffer-list)
 (require 'misc)
 (global-set-key "\M-f" 'forward-to-word)
 
@@ -227,15 +227,6 @@ LIST defaults to all existing live buffers."
 (global-set-key (kbd "<home>") 'beginning-of-buffer)
 (global-set-key (kbd "<end>") 'end-of-buffer)
 
-;--- Function for Control shift tab -----
-(defun c-shift-tab-buffer ()
-  ;switches to two buffers ago
-  (interactive)
-  (switch-to-buffer (other-buffer (other-buffer (current-buffer) t)))
-) 
-
-;(global-set-key [(control kp-tab)] 'c-shift-tab-buffer)
-
 ;;; replace
 
 (defun substitute-regexp (substitution)
@@ -262,13 +253,7 @@ LIST defaults to all existing live buffers."
   "move tghru the mark riung"
   (set-mark-command 1) 
 )
-;;(global-set-key [(control x) (control x)] 'roundring)
-
-(defun RC () 
-   (interactive)
-  "Compile the radio controller"
-  (compile "make -k PLATFORM=Linux_OE_RC" ) 
-)
+(global-set-key [(control x) (control x)] 'roundring)
 
 ;;  want gtags mode
 
