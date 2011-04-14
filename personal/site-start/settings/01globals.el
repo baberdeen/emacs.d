@@ -15,8 +15,9 @@
 (setq scroll-preserve-screen-position t)            ;; return to same line on a scroll back
 (setq next-line-add-newlines nil)                   ;; do NOT add newlines if I cursor past last line in file
 
+;; -----
 
-;; Saves a history of files opened previously (including other times 
+;; Saves a history of files opened previously (including other times
 ;; Emacs was used - very useful)
 
 (require `savehist)
@@ -31,29 +32,20 @@
 (setq shadow-todo-file "~/.emacs.d/shadow-todo")
 (setq-default save-place t)
 
-;; time-stamps  from http://www.djcbsoftware.nl/dot-emacs.html
-;; when there is a "Time-stamp: <>" in the first 10 lines of the file,
-;; emacs will write time-stamp information there when saving the file.
-;; see the top of this file for an example... 
-
-;;(setq 
-;;  time-stamp-active t          ; do enable time-stamps
-;;  time-stamp-line-limit 10     ; check first 10 buffer lines for Time-stamp: <>
-;;  time-stamp-format "Last changed %02d-%B-%04y %02H:%02M:%02S by %L, %u") ; date format
-;;(add-hook 'write-file-hooks 'time-stamp) ; update when saving
-
-
 ;;;
 ;;; Keep versioned backups
 ;;;
+;;; dont do
+;;;    backup-by-copying-when-linked t ;; Copy linked files, don't rename.
+;;; it takes execute permission away form script files
 
 (setq version-control t                 ;; Use version numbers for backups
         kept-new-versions 16            ;; Number of newest versions to keep
         kept-old-versions 2             ;; Number of oldest versions to keep
         delete-old-versions t           ;; Ask to delete excess backup versions?
-        backup-by-copying-when-linked t ;; Copy linked files, don't rename.
+        backup-by-copying   t           ;; Copy files, don't rename.
         backup-directory-alist          ;; backup files go into ~/.saves
-          '(("." . "~/.emacs.d/saves")) 
+          '(("." . "~/.emacs.d/saves"))
         )
 
 (defun force-backup-of-buffer ()        ;; backup a buffer now
@@ -61,6 +53,8 @@
       (backup-buffer)))
 
 (add-hook 'before-save-hook  'force-backup-of-buffer) ;;; backup buffer on save
+
+;; ---
 
 ;;
 ;; toggle window split between hotizontal and vertical
@@ -91,6 +85,8 @@
                       (if this-win-2nd (other-window 1))))))
 
 (global-set-key [(control x) (T)] 'toggle-window-split)
+
+;; ----
 
 ;;
 ;; other stuff
@@ -188,12 +184,12 @@ LIST defaults to all existing live buffers."
 
 
 ;;will make the last line end in a carriage return.
-(setq require-final-newline t) 
+(setq require-final-newline t)
 
 (require 'redo+)
   (global-set-key (kbd "C-?") 'redo)
 
-;; Centering code stolen from somewhere and restolen from 
+;; Centering code stolen from somewhere and restolen from
 ;; http://www.chrislott.org/geek/emacs/dotemacs.html
 ;; centers the screen around a line...
 (global-set-key [(control l)]  'centerer)
@@ -248,17 +244,21 @@ LIST defaults to all existing live buffers."
     (error "Invalid syntax")))
 
 (setq set-mark-command-repeat-pop 1)
-(defun roundring () 
+(defun roundring ()
    (interactive)
   "move tghru the mark riung"
-  (set-mark-command 1) 
+  (set-mark-command 1)
 )
 (global-set-key [(control x) (control x)] 'roundring)
 
 ;;  want gtags mode
 
-(setq c-mode-hook
-          '(lambda ()
-              (gtags-mode 1)
-      ))
+(add-hook 'c-mode-common-hook '(lambda ()
+              (gtags-mode 1)) )
+
+;;(setq c-mode-hook
+;;          '(lambda ()
+;;              (gtags-mode 1)
+;;      ))
+
 (setq vc-handled-backends nil)
