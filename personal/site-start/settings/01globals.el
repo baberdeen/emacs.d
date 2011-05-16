@@ -249,6 +249,13 @@ LIST defaults to all existing live buffers."
   "move tghru the mark riung"
   (set-mark-command 1)
 )
+
+(defun dt ()
+   (interactive)
+   "short form for deletet-trailing-whitespace"
+   (delete-trailing-whitespace)
+)
+
 (global-set-key [(control x) (control x)] 'roundring)
 
 ;;  want gtags mode
