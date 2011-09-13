@@ -268,4 +268,10 @@ LIST defaults to all existing live buffers."
 ;;              (gtags-mode 1)
 ;;      ))
 
+;;(setq gtags-mode-hook
+;;   '(lambda ()
+;;      (setq gtags-pop-delete t)
+;;      (setq gtags-path-style 'absolute)
+;; ))
+
 (setq vc-handled-backends nil)
