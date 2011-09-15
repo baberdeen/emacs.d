@@ -275,3 +275,12 @@ LIST defaults to all existing live buffers."
 ;; ))
 
 (setq vc-handled-backends nil)
+
+;;
+;; process color escqpe sequences in .txt files
+;;
+
+(require 'tty-format)
+(add-hook 'find-file-hooks 'tty-format-guess)
+
+
