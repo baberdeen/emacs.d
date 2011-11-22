@@ -419,7 +419,7 @@ indeed be ordinary text."
         (setq filename (jka-compr-byte-compiler-base-file-name filename)))
 
       (when (let ((case-fold-search t))
-              (or (string-match "\\.txt\\'"  filename)
+              (or (string-match "\\.tty\\'"  filename)
                   (string-match "/README\\'" filename)))
 
         (if (save-excursion

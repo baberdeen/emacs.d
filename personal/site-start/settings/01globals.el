@@ -100,7 +100,7 @@
 (setq diff-switches "-u")
 
 ;;(global-set-key "\C-x\C-b" 'buffer-menu)
-(global-set-key "\C-x\C-b" 'electric-buffer-list)
+;;(global-set-key "\C-x\C-b" 'electric-buffer-list)
 (require 'misc)
 (global-set-key "\M-f" 'forward-to-word)
 
