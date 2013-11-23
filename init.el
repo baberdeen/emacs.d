@@ -1,26 +1,71 @@
-(setq load-path (cons "~/.emacs.d/personal/base-packages/" load-path))
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  )
 
-(     load "safe-load"         nil t )  ; error trapping load function.
-(safe-load "my-site-start"     nil 2 )  ; load automatic site lisp loader
+(setq load-path (cons "~/.emacs.d/personal-packages/" load-path))
 
-;; load all startup files
+(defalias 'yes-or-no-p 'y-or-n-p)
 
-(my-site-start "~/.emacs.d/personal/site-start/")
+(defun toggle-window-split ()
+  (interactive)
+  (if (= (count-windows) 2)
+      (let* ((this-win-buffer (window-buffer))
+                  (next-win-buffer (window-buffer (next-window)))
+                       (this-win-edges (window-edges (selected-window)))
+                            (next-win-edges (window-edges (next-window)))
+                                 (this-win-2nd (not (and (<= (car this-win-edges)
+                                                              (car next-win-edges))
+                                                              (<= (cadr this-win-edges)
+                                                                   (cadr next-win-edges)))))
+                                      (splitter
+                                             (if (= (car this-win-edges)
+                                                         (car (window-edges (next-window))))
+                                                   'split-window-horizontally
+                                               'split-window-vertically)))
+        (delete-other-windows)
+        (let ((first-win (selected-window)))
+            (funcall splitter)
+              (if this-win-2nd (other-window 1))
+                (set-window-buffer (selected-window) this-win-buffer)
+                  (set-window-buffer (next-window) next-win-buffer)
+                    (select-window first-win)
+                      (if this-win-2nd (other-window 1))))))
+
+(require 'yasnippet)                                                              
+(yas-global-mode 1)
 
 
+(defun locate-data-directory (srch) 
+  "~/.emacs.d/Templates"
+)
 
+(require 'template)
+(template-initialize)
 
-
+(require 'color-theme)
+(setq color-theme-is-global t)
+(color-theme-initialize)
+(color-theme-calm-forest )
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(completion-ignored-extensions (quote (".o" "~" ".bin" ".lbin" ".so" ".a" ".ln" ".blg" ".bbl" ".elc" ".lof" ".glo" ".idx" ".lot" ".svn/" ".hg/" ".git/" ".bzr/" "CVS/" "_darcs/" "_MTN/" ".fmt" ".tfm" ".class" ".fas" ".lib" ".mem" ".x86f" ".sparcf" ".fasl" ".ufsl" ".fsl" ".dxl" ".pfsl" ".dfsl" ".p64fsl" ".d64fsl" ".dx64fsl" ".lo" ".la" ".gmo" ".mo" ".toc" ".aux" ".cp" ".fn" ".ky" ".pg" ".tp" ".vr" ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs" ".pyc" ".pyo")))
- '(dired-garbage-files-regexp "\\(?:\\.\\(?:aux\\|bak\\|dvi\\|log\\|orig\\|rej\\|pyo\\|toc\\)\\)\\'"))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(delete-selection-mode nil)
+ '(diff-command "diff")
+ '(diff-switches "-cebWB")
+ '(ecb-options-version "2.40")
+ '(kill-whole-line t)
+ '(mark-even-if-inactive t)
+ '(python-honour-comment-indentation t)
+ '(scroll-bar-mode (quote right))
+ '(transient-mark-mode 1)
+ '(truncate-lines t))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )

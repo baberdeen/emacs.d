@@ -1,6 +1,9 @@
 auto-save-list/
-/history
+history/
 /places
-saves/
+/backups
+/saves
 *.elc
+*~
+ac-comphist.dat
 
