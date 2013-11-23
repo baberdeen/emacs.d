@@ -3,4 +3,10 @@ auto-save-list/
 /places
 saves/
 *.elc
-
+\#*
+tramp
+byte-cache/
+*~
+*.elc
+.#*
+ac-comphist.dat
