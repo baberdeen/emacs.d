@@ -69,3 +69,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; ignore unistering things in dired
+
+(require 'dired-x)
+(setq-default dired-omit-files-p t) ; this is buffer-local variable
+(setq dired-omit-files "^\\.[^.]\\|\\.pdf$\\|\\.tex\\|\\.pyc$")
+
