@@ -6,4 +6,4 @@ history/
 *.elc
 *~
 ac-comphist.dat
-
+.init.el.swp

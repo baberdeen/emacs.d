@@ -76,3 +76,12 @@
 (setq-default dired-omit-files-p t) ; this is buffer-local variable
 (setq dired-omit-files "^\\.[^.]\\|\\.pdf$\\|\\.tex\\|\\.pyc$")
 
+;; python mode
+
+(setq py-install-directory "~/.emacs.d/personal-packages/python-mode")
+(add-to-list 'load-path py-install-directory)
+(require 'python-mode)
+
+
+
+
