@@ -7,3 +7,5 @@ history/
 *~
 ac-comphist.dat
 .init.el.swp
+.\#*
+*.pyc
