@@ -94,8 +94,11 @@
 
 (defun my-python-hook ()
   (interactive)
-;;  (define-key python-mode-map (kbd "RET") 'newline-and-indent))
-  (define-key python-mode-map (kbd "RET") 'my-python-newline))
+  ;;(define-key python-mode-map (kbd "RET") 'newline-and-indent))
+  (define-key python-mode-map (kbd "RET") 'my-python-newline)
+  (flyspell-prog-mode)
+)
+
 (add-hook 'python-mode-hook 'my-python-hook)
 
 ;; copy current word into kill ring
