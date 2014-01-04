@@ -1,12 +1,38 @@
+;; setup for loading packages
+
 (when (>= emacs-major-version 24)
   (require 'package)
   (package-initialize)
   (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
   )
 
-(setq load-path (cons "~/.emacs.d/personal-packages/" load-path))
+;; various settings
+
+(setq load-path (cons "~/.emacs.d/personal-packages/" load-path))  ;; place for manualy installed packages
+(defun locate-data-directory (srch)  "~/.emacs.d/Templates" )      ;; directoy holding templates for new files
+(savehist-mode 1)                                                  ;; minibuffer history is persistent
+
+;; color theme
+
+(require 'color-theme)
+(setq color-theme-is-global t)
+(color-theme-initialize)
+(color-theme-calm-forest )
+
+;; activation of various modules
+
+(require 'yasnippet)                                                              
+(yas-global-mode 1)
+
+(require 'template)
+(template-initialize)
+
+;;  aliases
 
 (defalias 'yes-or-no-p 'y-or-n-p)
+(defalias 'dt 'delete-trailing-whitespace)
+
+;; togle window split
 
 (defun toggle-window-split ()
   (interactive)
@@ -33,48 +59,14 @@
                     (select-window first-win)
                       (if this-win-2nd (other-window 1))))))
 
-(require 'yasnippet)                                                              
-(yas-global-mode 1)
-
-
-(defun locate-data-directory (srch) 
-  "~/.emacs.d/Templates"
-)
-
-(require 'template)
-(template-initialize)
-
-(require 'color-theme)
-(setq color-theme-is-global t)
-(color-theme-initialize)
-(color-theme-calm-forest )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(delete-selection-mode nil)
- '(diff-command "diff")
- '(diff-switches "-cebWB")
- '(ecb-options-version "2.40")
- '(kill-whole-line t)
- '(mark-even-if-inactive t)
- '(python-honour-comment-indentation t)
- '(scroll-bar-mode (quote right))
- '(transient-mark-mode 1)
- '(truncate-lines t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+(global-set-key (kbd "C-x ~")         'toggle-window-split)
 
 ;; ignore unistering things in dired
 
 (require 'dired-x)
 (setq-default dired-omit-files-p t) ; this is buffer-local variable
 (setq dired-omit-files "^\\.[^.]\\|\\.pdf$\\|\\.tex\\|\\.pyc$")
+
 
 ;; python mode
 
@@ -88,20 +80,6 @@
 (require 'autopair)
 (autopair-global-mode) ;; to enable in all buffers
 
-;;
-;; minibuffer history saving
-;;
-
-(savehist-mode 1)
-
-;;
-;; some aliases
-;;
-
-(defun dt ()
-  (interactive)
-  (delete-trailing-whitespace)
-)
 
 ;; dont know why I have to define this - it seems like
 ;; python mode should be doing this on its own
@@ -120,12 +98,14 @@
   (define-key python-mode-map (kbd "RET") 'my-python-newline))
 (add-hook 'python-mode-hook 'my-python-hook)
 
+;; copy current word into kill ring
 
 (defun get-point (symbol &optional arg)
       "get the point"
       (funcall symbol arg)
       (point)
      )
+
      
 (defun copy-thing (begin-of-thing end-of-thing &optional arg)
   "copy thing between beg & end into kill ring"
@@ -198,4 +178,26 @@
 (global-set-key (kbd "<C-mouse-4>") 'text-scale-decrease)                                                                                                                 
 (global-set-key (kbd "<C-mouse-5>") 'text-scale-increase)                                                                                                                 
 ;;;;                                                                          
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(delete-selection-mode nil)
+ '(diff-command "diff")
+ '(diff-switches "-cebWB")
+ '(ecb-options-version "2.40")
+ '(kill-whole-line t)
+ '(mark-even-if-inactive t)
+ '(python-honour-comment-indentation t)
+ '(scroll-bar-mode (quote right))
+ '(transient-mark-mode 1)
+ '(truncate-lines t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
 
