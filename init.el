@@ -88,6 +88,21 @@
 (require 'autopair)
 (autopair-global-mode) ;; to enable in all buffers
 
+;;
+;; minibuffer history saving
+;;
+
+(savehist-mode 1)
+
+;;
+;; some aliases
+;;
+
+(defun dt ()
+  (interactive)
+  (delete-trailing-whitespace)
+)
+
 ;; dont know why I have to define this - it seems like
 ;; python mode should be doing this on its own
 ;; must be missing something obvious
