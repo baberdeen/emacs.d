@@ -18,7 +18,7 @@
 (defconst my-c-style
   '((indent-tabs-mode . nil)
     (c-tab-always-indent . t)
-    (c-indent-level 3)
+    (c-indent-level 4)
     (c-comment-only-line-offset 0)
     (c-basic-offset . 4)
 ;    (c-echo-syntactic-information-p . t) - this is only useful for debugging

@@ -53,3 +53,8 @@
 
 
 (global-set-key [(meta d)] 'my-whack-word)
+
+;; want to export org files as markdown
+
+(eval-after-load "org"
+  '(require 'ox-md nil t))

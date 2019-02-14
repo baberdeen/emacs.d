@@ -2,8 +2,9 @@
 (global-set-key [(control c) (control f)] 'gtags-find-tag-from-here) ;; better buffer selector
 (global-font-lock-mode t)                           ;; always want syntax highlighting
 (setq font-lock-maximum-decoration t)               ;; as nice as possible
-(xterm-mouse-mode)                                  ;; use mouse buttons
-(mouse-wheel-mode)                                  ;; use mouse scroll weel
+(require 'xt-mouse)
+(xterm-mouse-mode t)                                  ;; use mouse buttons
+;(mouse-wheel-mode) t                                  ;; use mouse scroll weel
 (transient-mark-mode 1)                             ;; region is highlighted
 (show-paren-mode 1)                                 ;; show matching parenthesis
 (setq-default truncate-lines t)                     ;; truncate lines if they are too long
@@ -14,7 +15,28 @@
 (setq scroll-conservatively 2)                      ;; scroll in small increments
 (setq scroll-preserve-screen-position t)            ;; return to same line on a scroll back
 (setq next-line-add-newlines nil)                   ;; do NOT add newlines if I cursor past last line in file
+(setq file-precious-flag nil)
 
+; yay - mouse wheel doesn't work yet again
+
+
+(defun cursor-down-some-lines ()
+  "Move cursor down 10 logical lines"
+  (interactive)
+  (forward-line 1)
+  )
+
+(defun cursor-up-some-lines ()
+  "Move cursor up 10 logical lines"
+  (interactive)
+  (forward-line -1))
+
+;(when (string-equal system-type "gnu/linux")
+;  (progn
+;    (global-set-key (kbd "<mouse-4>") 'cursor-up-some-lines) ; wheel up
+;    (global-set-key (kbd "<mouse-5>") 'cursor-down-some-lines) ; wheel down
+;    )
+; )
 ;; -----
 
 ;; Saves a history of files opened previously (including other times
@@ -187,7 +209,7 @@ LIST defaults to all existing live buffers."
 (setq require-final-newline t)
 
 (require 'redo+)
-  (global-set-key (kbd "C-?") 'redo)
+(global-set-key (kbd "C-?") 'redo)
 
 ;; Centering code stolen from somewhere and restolen from
 ;; http://www.chrislott.org/geek/emacs/dotemacs.html
@@ -263,6 +285,8 @@ LIST defaults to all existing live buffers."
 (add-hook 'c-mode-common-hook '(lambda ()
               (gtags-mode 1)) )
 
+(setq-default c-basic-offset 4)
+
 ;;(setq c-mode-hook
 ;;          '(lambda ()
 ;;              (gtags-mode 1)
@@ -284,3 +308,4 @@ LIST defaults to all existing live buffers."
 (add-hook 'find-file-hooks 'tty-format-guess)
 
 
+(setq python-indent 4)
